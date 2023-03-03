@@ -12,6 +12,6 @@ app.use(express.json());
 
 app.use("/prepair", drinkRouter);
 
-app.listen(process.env.PORT, () => {
+app.listen(Number(process.env.PORT), () => {
     console.log(`Server up and running at port ${process.env.PORT}`);
 })
