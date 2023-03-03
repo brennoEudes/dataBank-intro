@@ -27,24 +27,20 @@ drinkRouter.get("/all-drinks", async (req, res) => {
   }
 });
 
-drinkRouter.get("/drinkId", async (req, res) => {
+drinkRouter.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
     const oneDrink = await drinkModel.findById(id);
 
-    if (!oneDrink) {
-      return res.status(404).json("Drink não encontrado!");
-    }
-
     return res.status(201).json(oneDrink);
   } catch (err) {
     console.log(err);
-    return res.status(500).json("Erro no preparo do drink!");
+    return res.status(500).json("Drink não encontrado!");
   }
 });
 
-drinkRouter.delete("/delete/id", async (req, res) => {
+drinkRouter.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -57,7 +53,7 @@ drinkRouter.delete("/delete/id", async (req, res) => {
   }
 });
 
-drinkRouter.put("/edit/id", async (req, res) => {
+drinkRouter.put("/edit/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
