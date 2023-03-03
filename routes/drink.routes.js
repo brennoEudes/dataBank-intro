@@ -40,7 +40,7 @@ drinkRouter.get("/:id", async (req, res) => {
   }
 });
 
-drinkRouter.delete("/delete/:id", async (req, res) => {
+drinkRouter.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -49,11 +49,11 @@ drinkRouter.delete("/delete/:id", async (req, res) => {
     return res.status(201).json(deletedDrink);
   } catch (err) {
     console.log(err);
-    return res.status(500).json("Erro no preparo do drink!");
+    return res.status(500).json("Drink não encontrado!");
   }
 });
 
-drinkRouter.put("/edit/:id", async (req, res) => {
+drinkRouter.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -66,7 +66,7 @@ drinkRouter.put("/edit/:id", async (req, res) => {
     return res.status(201).json(updatedDrink);
   } catch (err) {
     console.log(err);
-    return res.status(500).json("Erro no preparo do drink!");
+    return res.status(500).json("Drink não encontrado!");
   }
 });
 
