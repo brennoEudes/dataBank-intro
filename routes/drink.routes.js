@@ -1,11 +1,23 @@
 import express from "express";
 import drinkModel from "../models/drink.model.js";
+import drinkSourceModel from "../models/drinkSource.model.js";
 
 const drinkRouter = express.Router();
 
-drinkRouter.post("/", async (req, res) => {
+drinkRouter.post("/:drinkSourceId", async (req, res) => {
   try {
-    const newDrink = await drinkModel.create({ ...req.body });
+    const { drinkSourceId } = req.params;
+
+    const newDrink = await drinkModel.create({
+      ...req.body,
+      drinkType: drinkSourceId,
+    });
+
+    const updatedDrinkSource = await drinkSourceModel.findOneAndUpdate(
+      { _id: drinkSourceId },
+      { $push: { drinks: newDrink._id } },
+      { new: true, runValidators: true }
+    );
 
     return res.status(201).json(newDrink);
   } catch (err) {
