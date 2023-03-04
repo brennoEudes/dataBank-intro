@@ -75,7 +75,7 @@ drinkRouter.put("/:id", async (req, res) => {
       { new: true, runValidators: true }
     );
 
-    return res.status(201).json(updatedDrink);
+    return res.status(200).json(updatedDrink);
   } catch (err) {
     console.log(err);
     return res.status(500).json("Drink não encontrado!");
