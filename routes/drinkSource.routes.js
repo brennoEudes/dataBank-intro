@@ -38,4 +38,36 @@ drinkSourceRouter.get("/:drinkSourceId", async (req, res) => {
   }
 });
 
+drinkSourceRouter.put("/:drinkSourceId", async (req, res) => {
+  try {
+    const { drinkSourceId } = req.params;
+
+    const updatedDrinkSource = await drinkSourceModel.findByIdAndUpdate(
+      {_id: drinkSourceId},
+      { ...req.body },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(200).json(updatedDrinkSource);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json("Drink não encontrado!");
+  }
+});
+
+drinkSourceRouter.delete("/:drinkSourceId", async (req, res) => {
+  try {
+    const { drinkSourceId } = req.params;
+
+    const deletedDrinkSource = await drinkSourceModel.findByIdAndDelete({_id:drinkSourceId});
+
+    await drinkSourceModel.deleteMany({drinkType :drinkSourceId});
+
+    return res.status(201).json(deletedDrinkSource);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json("Drink não encontrado!");
+  }
+});
+
 export default drinkSourceRouter;

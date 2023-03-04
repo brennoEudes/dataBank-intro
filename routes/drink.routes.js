@@ -43,7 +43,7 @@ drinkRouter.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const oneDrink = await drinkModel.findById(id);
+    const oneDrink = await drinkModel.findById(id).populate("drinkType");
 
     return res.status(201).json(oneDrink);
   } catch (err) {
@@ -57,6 +57,9 @@ drinkRouter.delete("/:id", async (req, res) => {
     const { id } = req.params;
 
     const deletedDrink = await drinkModel.findByIdAndDelete(id);
+
+    await drinkModel.findByIdAndUpdate ({id
+    }, {$pull: {drink: id}}, {runValidators: true});
 
     return res.status(201).json(deletedDrink);
   } catch (err) {
